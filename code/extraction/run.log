@@ -1,4 +1,4 @@
-/Users/sahilmane/Documents/GitHub/hackerrank-orchestrate-september26/code/extraction/run_extraction.py:57: FutureWarning: 
+/Users/sahilmane/Documents/GitHub/hackerrank-orchestrate-september26/code/extraction/run_extraction.py:59: FutureWarning: 
 
 All support for the `google.generativeai` package has ended. It will no longer be receiving 
 updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
@@ -7,35 +7,3 @@ See README for more details:
 https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
 
   import google.generativeai as genai
-[image] image_01 (event event_253)...
-  attempt 1 failed: GenerativeModel.generate_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?; retrying in 5s
-  attempt 2 failed: GenerativeModel.generate_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?; retrying in 5s
-  attempt 3 failed: GenerativeModel.generate_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?; retrying in 5s
-Traceback (most recent call last):
-  File "/Users/sahilmane/Documents/GitHub/hackerrank-orchestrate-september26/code/extraction/run_extraction.py", line 90, in call_with_retry
-    response = model.generate_content(**kwargs)
-TypeError: GenerativeModel.generate_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/Users/sahilmane/Documents/GitHub/hackerrank-orchestrate-september26/code/extraction/run_extraction.py", line 329, in <module>
-    main()
-    ~~~~^^
-  File "/Users/sahilmane/Documents/GitHub/hackerrank-orchestrate-september26/code/extraction/run_extraction.py", line 323, in main
-    extract_images(model, usage)
-    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
-  File "/Users/sahilmane/Documents/GitHub/hackerrank-orchestrate-september26/code/extraction/run_extraction.py", line 149, in extract_images
-    text, usage_dict, elapsed = call_with_retry(
-                                ~~~~~~~~~~~~~~~^
-        model,
-        ^^^^^^
-        content=[prompt, image],
-        ^^^^^^^^^^^^^^^^^^^^^^^^
-        generation_config=generation_config,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/Users/sahilmane/Documents/GitHub/hackerrank-orchestrate-september26/code/extraction/run_extraction.py", line 105, in call_with_retry
-    raise RuntimeError(f"LLM call failed after {MAX_RETRIES} attempts: {last_error}") from last_error
-RuntimeError: LLM call failed after 3 attempts: GenerativeModel.generate_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?

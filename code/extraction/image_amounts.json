@@ -1,0 +1,162 @@
+{
+  "image_01": {
+    "doc_type": "payroll_letter",
+    "amount": 4365000,
+    "currency": "IDR",
+    "date": "2019-08-01",
+    "recurring": true,
+    "linked_event_id": "event_253",
+    "event_linkage_note": "The document is a pay slip for August 2019 showing the net pay associated with event_253.",
+    "image_id": "image_01"
+  },
+  "image_02": {
+    "doc_type": "receipt",
+    "amount": 200000.0,
+    "currency": "INR",
+    "date": "2023-08-11",
+    "recurring": false,
+    "linked_event_id": "event_1442",
+    "event_linkage_note": "This rent receipt documents a total rent and charges amount of 200,000 INR for the specified period.",
+    "image_id": "image_02"
+  },
+  "image_03": {
+    "doc_type": "receipt",
+    "amount": 41272.0,
+    "currency": "INR",
+    "date": "2026-02-27",
+    "recurring": false,
+    "linked_event_id": "event_1545",
+    "event_linkage_note": "This receipt documents the purchase items totaling 41272.00 INR from Riddhi Siddhi.",
+    "image_id": "image_03"
+  },
+  "image_04": {
+    "doc_type": "receipt",
+    "amount": 2854.0,
+    "currency": "INR",
+    "date": null,
+    "recurring": false,
+    "linked_event_id": "event_1700",
+    "event_linkage_note": "This receipt details the item bill and total delivered items for the linked financial event.",
+    "image_id": "image_04"
+  },
+  "image_05": {
+    "doc_type": "bill",
+    "amount": 704.05,
+    "currency": "INR",
+    "date": "2026-02-06",
+    "recurring": false,
+    "linked_event_id": "event_1786",
+    "event_linkage_note": "The document shows the account summary and total charges due of 704.05 INR by 06-Feb-2026, linked to event event_1786.",
+    "image_id": "image_05"
+  },
+  "image_06": {
+    "doc_type": "receipt",
+    "amount": 1995.0,
+    "currency": "INR",
+    "date": null,
+    "recurring": false,
+    "linked_event_id": "event_3051",
+    "event_linkage_note": "The document is a receipt showing the total paid amount of 1995.00 INR for items purchased from Blink Commerce Private Limited.",
+    "image_id": "image_06"
+  },
+  "image_07": {
+    "doc_type": "receipt",
+    "amount": 8528.1,
+    "currency": "RS",
+    "date": "2025-10-29",
+    "recurring": false,
+    "linked_event_id": "event_3231",
+    "event_linkage_note": "This receipt establishes the total amount paid for the food order.",
+    "image_id": "image_07"
+  },
+  "image_08": {
+    "doc_type": "receipt",
+    "amount": 15339.0,
+    "currency": "INR",
+    "date": "2026-08-30",
+    "recurring": false,
+    "linked_event_id": "event_4535",
+    "event_linkage_note": "This receipt confirms the total amount received of 15,339.00 INR for maintenance and other charges linked to event_4535.",
+    "image_id": "image_08"
+  },
+  "image_09": {
+    "doc_type": "receipt",
+    "amount": 723.0,
+    "currency": "INR",
+    "date": "2026-07-02",
+    "recurring": false,
+    "linked_event_id": "event_5170",
+    "event_linkage_note": "This receipt confirms the payment of 723.00 INR for the water bill associated with event_5170.",
+    "image_id": "image_09"
+  },
+  "image_10": {
+    "doc_type": "bill",
+    "amount": 79679.26,
+    "currency": "INR",
+    "date": null,
+    "recurring": false,
+    "linked_event_id": "event_6033",
+    "event_linkage_note": "The document is an itemized bill showing a balance due of 79,679.26 INR.",
+    "image_id": "image_10"
+  },
+  "image_11": {
+    "doc_type": "bill",
+    "amount": 3650.0,
+    "currency": "INR",
+    "date": "2023-01-19",
+    "recurring": false,
+    "linked_event_id": "event_6859",
+    "event_linkage_note": "This provisional hospital bill from Jeevan Hospital establishes the total amount due for medical services provided to the patient.",
+    "image_id": "image_11"
+  },
+  "image_12": {
+    "doc_type": "receipt",
+    "amount": 33.5,
+    "currency": "USD",
+    "date": "2025-01-10",
+    "recurring": false,
+    "linked_event_id": "event_7307",
+    "event_linkage_note": "This receipt establishes the total amount paid for a CityCab Service taxi ride linked to event_7307.",
+    "image_id": "image_12"
+  },
+  "image_13": {
+    "doc_type": "receipt",
+    "amount": 2298.0,
+    "currency": "INR",
+    "date": null,
+    "recurring": false,
+    "linked_event_id": "event_7941",
+    "event_linkage_note": "This receipt confirms the total paid amount of 2,298 INR for the order items associated with event_7941.",
+    "image_id": "image_13"
+  },
+  "image_14": {
+    "doc_type": "receipt",
+    "amount": 4543.0,
+    "currency": "INR",
+    "date": null,
+    "recurring": false,
+    "linked_event_id": "event_9421",
+    "event_linkage_note": "The document is a receipt detailing purchased items and showing a total amount due.",
+    "image_id": "image_14"
+  },
+  "image_15": {
+    "doc_type": "receipt",
+    "amount": 9968.0,
+    "currency": "INR",
+    "date": "2026-06-07",
+    "recurring": false,
+    "linked_event_id": "event_9806",
+    "event_linkage_note": "The document is a tax invoice/receipt for air travel related to event_9806.",
+    "image_id": "image_15"
+  },
+  "image_16": {
+    "doc_type": "receipt",
+    "amount": 393.22,
+    "currency": "INR",
+    "date": "2026-03-09",
+    "recurring": false,
+    "linked_event_id": "event_10521",
+    "event_linkage_note": "This receipt establishes the total charged amount for the EV charging session linked to event_10521.",
+    "image_id": "image_16"
+  }
+}

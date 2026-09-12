@@ -49,8 +49,10 @@ IMAGE_AMOUNTS_PATH = EXTRACTION_DIR / "image_amounts.json"
 MESSAGE_FACTS_PATH = EXTRACTION_DIR / "message_facts.json"
 USAGE_LOG_PATH = EXTRACTION_DIR / "usage_log.json"
 
-MAX_RETRIES = 3
+MAX_RETRIES = 6
 RETRY_WAIT_SECONDS = 5
+QUOTA_WAIT_SECONDS = 65
+CALL_SPACING_SECONDS = 3
 
 
 def load_model() -> Any:
@@ -100,8 +102,9 @@ def call_with_retry(model: Any, **kwargs: Any) -> Any:
             return response.text, usage_dict, elapsed
         except Exception as exc:  # network, quota, parsing of response object
             last_error = exc
-            print(f"  attempt {attempt} failed: {exc}; retrying in {RETRY_WAIT_SECONDS}s")
-            time.sleep(RETRY_WAIT_SECONDS)
+            wait = QUOTA_WAIT_SECONDS if "429" in str(exc) else RETRY_WAIT_SECONDS
+            print(f"  attempt {attempt} failed: {str(exc)[:120]}; retrying in {wait}s")
+            time.sleep(wait)
     raise RuntimeError(f"LLM call failed after {MAX_RETRIES} attempts: {last_error}") from last_error
 
 
@@ -179,10 +182,18 @@ def build_message_context(
     profiles_df: pd.DataFrame,
     requests_df: pd.DataFrame,
 ) -> dict[str, dict[str, Any]]:
-    """Group messages per user with the event/request facts they may amend."""
+    """Group messages per user with the event/request facts they may amend.
+
+    Settled history is excluded: it is already reflected in the opening balance
+    and messages can only reference one specific supplied event row at a time,
+    so sending it would only burn prompt tokens.
+    """
     per_user: dict[str, dict[str, Any]] = {}
     for user_id, group in messages_df.groupby("user_id"):
-        user_events = events_df[events_df["user_id"] == user_id]
+        user_events = events_df[
+            (events_df["user_id"] == user_id)
+            & (events_df["status"].str.strip().str.lower() != "settled")
+        ]
         event_rows = [
             {
                 "event_id": str(e.event_id),
@@ -249,6 +260,7 @@ def extract_messages(model: Any, usage: dict[str, Any]) -> None:
     for user_id, bundle in context.items():
         if user_id in results:
             continue
+        time.sleep(CALL_SPACING_SECONDS)  # stay under the per-minute quota
         prompt = message_prompt(json.dumps(bundle, ensure_ascii=False))
         print(f"[messages] {user_id}: {len(bundle['messages'])} messages, "
               f"{len(bundle['events'])} events in context...")
