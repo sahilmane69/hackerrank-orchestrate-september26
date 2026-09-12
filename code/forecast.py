@@ -560,6 +560,73 @@ def simulate_daily_balances(
     return closing, total_income, total_protected, lowest, lowest_date
 
 
+def apply_salary_override(
+    events: pd.DataFrame,
+    streams: list[RecurringStream],
+    salary_override: dict[str, Any] | None,
+    request_date: date,
+    skipped: list[str],
+) -> tuple[pd.DataFrame, list[RecurringStream]]:
+    """Apply a message-confirmed salary change to the salary stream and to
+    pending/scheduled salary credit rows on or after the effective date.
+
+    The override amount is in the message currency; rows keep that currency so
+    the normal dated exchange-rate conversion still applies downstream.
+    """
+    if not salary_override or salary_override.get("amount") is None:
+        return events, streams
+
+    amount = float(salary_override["amount"])
+    effective = salary_override.get("effective") or request_date
+    if effective < request_date:
+        effective = request_date  # projections start at request_date anyway
+
+    adjusted_streams: list[RecurringStream] = []
+    for stream in streams:
+        if stream.direction == "credit" and stream.category == "salary":
+            stream = RecurringStream(
+                event_type=stream.event_type,
+                category=stream.category,
+                direction=stream.direction,
+                amount=stream.amount,
+                interval=stream.interval,
+                interval_days=stream.interval_days,
+                day_of_month=stream.day_of_month,
+                last_date=stream.last_date,
+                occurrences=stream.occurrences,
+                source_event_id=stream.source_event_id,
+                flexibility=stream.flexibility,
+                minimum_allowed_amount=stream.minimum_allowed_amount,
+                amount_change_date=effective,
+                amount_after=amount,
+            )
+            skipped.append(
+                f"salary stream: {amount} from {effective.isoformat()} per message evidence"
+            )
+        adjusted_streams.append(stream)
+
+    adjusted = events
+    changed = False
+    for idx, row in adjusted.iterrows():
+        if str(row.get("category")) != "salary" or str(row.get("direction")) != "credit":
+            continue
+        if str(row.get("status")) not in {"pending", "scheduled"}:
+            continue
+        cash_on = cash_date_for_row(row)
+        if cash_on is None or cash_on < effective:
+            continue
+        if adjusted is events:
+            adjusted = events.copy()
+        adjusted.at[idx, "amount"] = amount
+        if salary_override.get("currency"):
+            adjusted.at[idx, "currency"] = str(salary_override["currency"])
+        changed = True
+        skipped.append(f"{row['event_id']}: salary amount set from message evidence")
+    if changed:
+        return adjusted, adjusted_streams
+    return events, adjusted_streams
+
+
 def forecast_90_days(
     request: pd.Series,
     profile: pd.Series,
@@ -568,6 +635,7 @@ def forecast_90_days(
     exchange_rates: pd.DataFrame | None = None,
     extra_payments: dict[date, float] | None = None,
     spending_changes: list[Any] | None = None,
+    salary_override: dict[str, Any] | None = None,
 ) -> ForecastResult:
     """Simulate balances from request_date through the next 90 days."""
     request_date = parse_date(request["request_date"])
@@ -590,6 +658,9 @@ def forecast_90_days(
         events, request_date, home_currency, rate_lookup, skipped
     )
     streams = apply_spending_changes(streams, spending_changes)
+    events, streams = apply_salary_override(
+        events, streams, salary_override, request_date, skipped
+    )
     explicit = explicit_cashflows(
         events, request_date, end_date, home_currency, rate_lookup, skipped
     )
@@ -625,6 +696,7 @@ def earliest_full_payment_date(
     profile: pd.Series,
     events: pd.DataFrame,
     exchange_rates: pd.DataFrame | None = None,
+    salary_override: dict[str, Any] | None = None,
 ) -> date | None:
     """First date a single full payment is 90-day-safe, with no spending changes."""
     requested = to_number(request["requested_amount"], "requested_amount")
@@ -640,6 +712,7 @@ def earliest_full_payment_date(
             events,
             extra_payments={cursor: requested},
             exchange_rates=exchange_rates,
+            salary_override=salary_override,
         )
         if result.is_safe:
             return cursor
@@ -652,6 +725,7 @@ def amount_safe_to_pay(
     profile: pd.Series,
     events: pd.DataFrame,
     exchange_rates: pd.DataFrame | None = None,
+    salary_override: dict[str, Any] | None = None,
 ) -> tuple[float, ForecastResult]:
     """
     Largest payment on request_date that still keeps every forecast day
@@ -661,7 +735,12 @@ def amount_safe_to_pay(
     requested = max(0.0, requested)
 
     zero_case = forecast_90_days(
-        request, profile, events, payment_on_request_date=0.0, exchange_rates=exchange_rates
+        request,
+        profile,
+        events,
+        payment_on_request_date=0.0,
+        exchange_rates=exchange_rates,
+        salary_override=salary_override,
     )
     if requested == 0 or not zero_case.is_safe:
         zero_case.amount_safe_to_pay = 0.0
@@ -673,6 +752,7 @@ def amount_safe_to_pay(
         events,
         payment_on_request_date=requested,
         exchange_rates=exchange_rates,
+        salary_override=salary_override,
     )
     if full.is_safe:
         full.amount_safe_to_pay = requested
@@ -691,6 +771,7 @@ def amount_safe_to_pay(
             events,
             payment_on_request_date=trial,
             exchange_rates=exchange_rates,
+            salary_override=salary_override,
         )
         if result.is_safe:
             best_cents = mid_cents
