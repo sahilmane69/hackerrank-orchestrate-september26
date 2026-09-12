@@ -148,7 +148,7 @@ def extract_images(model: Any, usage: dict[str, Any]) -> None:
         print(f"[image] {image_id} (event {linked_event})...")
         text, usage_dict, elapsed = call_with_retry(
             model,
-            content=[prompt, image],
+            contents=[prompt, image],
             generation_config=generation_config,
         )
         record_usage(usage, "image", image_id, usage_dict, elapsed)
@@ -253,7 +253,7 @@ def extract_messages(model: Any, usage: dict[str, Any]) -> None:
         print(f"[messages] {user_id}: {len(bundle['messages'])} messages, "
               f"{len(bundle['events'])} events in context...")
         text, usage_dict, elapsed = call_with_retry(
-            model, content=prompt, generation_config=generation_config
+            model, contents=prompt, generation_config=generation_config
         )
         record_usage(usage, "message", user_id, usage_dict, elapsed)
         try:

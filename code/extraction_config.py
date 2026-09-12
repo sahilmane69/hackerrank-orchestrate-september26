@@ -17,7 +17,7 @@ DATASET_DIR = PROJECT_ROOT / "dataset"
 MEDIA_DIR = DATASET_DIR / "media" / "images"
 CODE_DIR = Path(__file__).resolve().parent
 EXTRACTION_DIR = CODE_DIR / "extraction"
-MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
 
 IMAGE_SCHEMA = {
     "type": "object",
