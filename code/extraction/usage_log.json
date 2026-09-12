@@ -531,12 +531,633 @@
       "candidates_tokens": 114,
       "total_tokens": 798,
       "elapsed_seconds": 1.01
+    },
+    {
+      "phase": "message",
+      "subject": "user_141",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 696,
+      "candidates_tokens": 88,
+      "total_tokens": 784,
+      "elapsed_seconds": 1.14
+    },
+    {
+      "phase": "message",
+      "subject": "user_142",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 701,
+      "candidates_tokens": 112,
+      "total_tokens": 813,
+      "elapsed_seconds": 1.09
+    },
+    {
+      "phase": "message",
+      "subject": "user_143",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 690,
+      "candidates_tokens": 79,
+      "total_tokens": 769,
+      "elapsed_seconds": 0.83
+    },
+    {
+      "phase": "message",
+      "subject": "user_144",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 685,
+      "candidates_tokens": 107,
+      "total_tokens": 792,
+      "elapsed_seconds": 1.04
+    },
+    {
+      "phase": "message",
+      "subject": "user_145",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 696,
+      "candidates_tokens": 104,
+      "total_tokens": 800,
+      "elapsed_seconds": 0.96
+    },
+    {
+      "phase": "message",
+      "subject": "user_147",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 597,
+      "candidates_tokens": 106,
+      "total_tokens": 703,
+      "elapsed_seconds": 0.97
+    },
+    {
+      "phase": "message",
+      "subject": "user_148",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 605,
+      "candidates_tokens": 88,
+      "total_tokens": 693,
+      "elapsed_seconds": 0.88
+    },
+    {
+      "phase": "message",
+      "subject": "user_15",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 533,
+      "candidates_tokens": 112,
+      "total_tokens": 645,
+      "elapsed_seconds": 0.92
+    },
+    {
+      "phase": "message",
+      "subject": "user_150",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 587,
+      "candidates_tokens": 93,
+      "total_tokens": 680,
+      "elapsed_seconds": 0.89
+    },
+    {
+      "phase": "message",
+      "subject": "user_151",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 610,
+      "candidates_tokens": 121,
+      "total_tokens": 731,
+      "elapsed_seconds": 0.91
+    },
+    {
+      "phase": "message",
+      "subject": "user_152",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 597,
+      "candidates_tokens": 90,
+      "total_tokens": 687,
+      "elapsed_seconds": 0.92
+    },
+    {
+      "phase": "message",
+      "subject": "user_153",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 590,
+      "candidates_tokens": 82,
+      "total_tokens": 672,
+      "elapsed_seconds": 0.91
+    },
+    {
+      "phase": "message",
+      "subject": "user_154",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 583,
+      "candidates_tokens": 92,
+      "total_tokens": 675,
+      "elapsed_seconds": 0.89
+    },
+    {
+      "phase": "message",
+      "subject": "user_155",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 599,
+      "candidates_tokens": 111,
+      "total_tokens": 710,
+      "elapsed_seconds": 0.93
+    },
+    {
+      "phase": "message",
+      "subject": "user_156",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 682,
+      "candidates_tokens": 89,
+      "total_tokens": 771,
+      "elapsed_seconds": 0.92
+    },
+    {
+      "phase": "message",
+      "subject": "user_157",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 606,
+      "candidates_tokens": 98,
+      "total_tokens": 704,
+      "elapsed_seconds": 0.92
+    },
+    {
+      "phase": "message",
+      "subject": "user_159",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 594,
+      "candidates_tokens": 75,
+      "total_tokens": 669,
+      "elapsed_seconds": 0.88
+    },
+    {
+      "phase": "message",
+      "subject": "user_16",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 607,
+      "candidates_tokens": 84,
+      "total_tokens": 691,
+      "elapsed_seconds": 0.91
+    },
+    {
+      "phase": "message",
+      "subject": "user_160",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 686,
+      "candidates_tokens": 110,
+      "total_tokens": 796,
+      "elapsed_seconds": 1.06
+    },
+    {
+      "phase": "message",
+      "subject": "user_161",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 712,
+      "candidates_tokens": 119,
+      "total_tokens": 831,
+      "elapsed_seconds": 1.0
+    },
+    {
+      "phase": "message",
+      "subject": "user_162",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 696,
+      "candidates_tokens": 117,
+      "total_tokens": 813,
+      "elapsed_seconds": 0.96
+    },
+    {
+      "phase": "message",
+      "subject": "user_163",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 720,
+      "candidates_tokens": 120,
+      "total_tokens": 840,
+      "elapsed_seconds": 0.9
+    },
+    {
+      "phase": "message",
+      "subject": "user_164",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 704,
+      "candidates_tokens": 101,
+      "total_tokens": 805,
+      "elapsed_seconds": 0.94
+    },
+    {
+      "phase": "message",
+      "subject": "user_165",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 675,
+      "candidates_tokens": 99,
+      "total_tokens": 774,
+      "elapsed_seconds": 0.87
+    },
+    {
+      "phase": "message",
+      "subject": "user_166",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 704,
+      "candidates_tokens": 110,
+      "total_tokens": 814,
+      "elapsed_seconds": 0.96
+    },
+    {
+      "phase": "message",
+      "subject": "user_167",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 601,
+      "candidates_tokens": 96,
+      "total_tokens": 697,
+      "elapsed_seconds": 0.89
+    },
+    {
+      "phase": "message",
+      "subject": "user_168",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 590,
+      "candidates_tokens": 93,
+      "total_tokens": 683,
+      "elapsed_seconds": 0.96
+    },
+    {
+      "phase": "message",
+      "subject": "user_169",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 590,
+      "candidates_tokens": 80,
+      "total_tokens": 670,
+      "elapsed_seconds": 0.81
+    },
+    {
+      "phase": "message",
+      "subject": "user_170",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 592,
+      "candidates_tokens": 79,
+      "total_tokens": 671,
+      "elapsed_seconds": 0.88
+    },
+    {
+      "phase": "message",
+      "subject": "user_171",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 590,
+      "candidates_tokens": 75,
+      "total_tokens": 665,
+      "elapsed_seconds": 0.88
+    },
+    {
+      "phase": "message",
+      "subject": "user_172",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 600,
+      "candidates_tokens": 79,
+      "total_tokens": 679,
+      "elapsed_seconds": 0.82
+    },
+    {
+      "phase": "message",
+      "subject": "user_173",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 603,
+      "candidates_tokens": 109,
+      "total_tokens": 712,
+      "elapsed_seconds": 1.01
+    },
+    {
+      "phase": "message",
+      "subject": "user_175",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 586,
+      "candidates_tokens": 97,
+      "total_tokens": 683,
+      "elapsed_seconds": 0.96
+    },
+    {
+      "phase": "message",
+      "subject": "user_176",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 592,
+      "candidates_tokens": 90,
+      "total_tokens": 682,
+      "elapsed_seconds": 0.89
+    },
+    {
+      "phase": "message",
+      "subject": "user_177",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 590,
+      "candidates_tokens": 93,
+      "total_tokens": 683,
+      "elapsed_seconds": 0.93
+    },
+    {
+      "phase": "message",
+      "subject": "user_178",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 608,
+      "candidates_tokens": 112,
+      "total_tokens": 720,
+      "elapsed_seconds": 1.08
+    },
+    {
+      "phase": "message",
+      "subject": "user_179",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 596,
+      "candidates_tokens": 78,
+      "total_tokens": 674,
+      "elapsed_seconds": 0.98
+    },
+    {
+      "phase": "message",
+      "subject": "user_18",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 530,
+      "candidates_tokens": 78,
+      "total_tokens": 608,
+      "elapsed_seconds": 0.91
+    },
+    {
+      "phase": "message",
+      "subject": "user_180",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 686,
+      "candidates_tokens": 114,
+      "total_tokens": 800,
+      "elapsed_seconds": 0.9
+    },
+    {
+      "phase": "message",
+      "subject": "user_182",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 682,
+      "candidates_tokens": 82,
+      "total_tokens": 764,
+      "elapsed_seconds": 0.9
+    },
+    {
+      "phase": "message",
+      "subject": "user_183",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 698,
+      "candidates_tokens": 88,
+      "total_tokens": 786,
+      "elapsed_seconds": 0.88
+    },
+    {
+      "phase": "message",
+      "subject": "user_184",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 682,
+      "candidates_tokens": 85,
+      "total_tokens": 767,
+      "elapsed_seconds": 1.04
+    },
+    {
+      "phase": "message",
+      "subject": "user_185",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 677,
+      "candidates_tokens": 83,
+      "total_tokens": 760,
+      "elapsed_seconds": 0.83
+    },
+    {
+      "phase": "message",
+      "subject": "user_186",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 686,
+      "candidates_tokens": 100,
+      "total_tokens": 786,
+      "elapsed_seconds": 0.9
+    },
+    {
+      "phase": "message",
+      "subject": "user_187",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 603,
+      "candidates_tokens": 114,
+      "total_tokens": 717,
+      "elapsed_seconds": 0.94
+    },
+    {
+      "phase": "message",
+      "subject": "user_188",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 602,
+      "candidates_tokens": 92,
+      "total_tokens": 694,
+      "elapsed_seconds": 0.94
+    },
+    {
+      "phase": "message",
+      "subject": "user_189",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 586,
+      "candidates_tokens": 106,
+      "total_tokens": 692,
+      "elapsed_seconds": 1.01
+    },
+    {
+      "phase": "message",
+      "subject": "user_191",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 686,
+      "candidates_tokens": 94,
+      "total_tokens": 780,
+      "elapsed_seconds": 0.96
+    },
+    {
+      "phase": "message",
+      "subject": "user_193",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 591,
+      "candidates_tokens": 95,
+      "total_tokens": 686,
+      "elapsed_seconds": 1.28
+    },
+    {
+      "phase": "message",
+      "subject": "user_194",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 599,
+      "candidates_tokens": 97,
+      "total_tokens": 696,
+      "elapsed_seconds": 0.98
+    },
+    {
+      "phase": "message",
+      "subject": "user_195",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 587,
+      "candidates_tokens": 98,
+      "total_tokens": 685,
+      "elapsed_seconds": 0.89
+    },
+    {
+      "phase": "message",
+      "subject": "user_197",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 615,
+      "candidates_tokens": 121,
+      "total_tokens": 736,
+      "elapsed_seconds": 0.9
+    },
+    {
+      "phase": "message",
+      "subject": "user_198",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 691,
+      "candidates_tokens": 91,
+      "total_tokens": 782,
+      "elapsed_seconds": 0.91
+    },
+    {
+      "phase": "message",
+      "subject": "user_199",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 603,
+      "candidates_tokens": 76,
+      "total_tokens": 679,
+      "elapsed_seconds": 1.0
+    },
+    {
+      "phase": "message",
+      "subject": "user_20",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 792,
+      "candidates_tokens": 93,
+      "total_tokens": 885,
+      "elapsed_seconds": 0.91
+    },
+    {
+      "phase": "message",
+      "subject": "user_200",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 696,
+      "candidates_tokens": 80,
+      "total_tokens": 776,
+      "elapsed_seconds": 0.86
+    },
+    {
+      "phase": "message",
+      "subject": "user_201",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 697,
+      "candidates_tokens": 98,
+      "total_tokens": 795,
+      "elapsed_seconds": 0.89
+    },
+    {
+      "phase": "message",
+      "subject": "user_202",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 699,
+      "candidates_tokens": 79,
+      "total_tokens": 778,
+      "elapsed_seconds": 0.92
+    },
+    {
+      "phase": "message",
+      "subject": "user_204",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 682,
+      "candidates_tokens": 113,
+      "total_tokens": 795,
+      "elapsed_seconds": 0.93
+    },
+    {
+      "phase": "message",
+      "subject": "user_208",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 683,
+      "candidates_tokens": 79,
+      "total_tokens": 762,
+      "elapsed_seconds": 0.94
+    },
+    {
+      "phase": "message",
+      "subject": "user_210",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 690,
+      "candidates_tokens": 87,
+      "total_tokens": 777,
+      "elapsed_seconds": 1.26
+    },
+    {
+      "phase": "message",
+      "subject": "user_212",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 612,
+      "candidates_tokens": 107,
+      "total_tokens": 719,
+      "elapsed_seconds": 0.98
+    },
+    {
+      "phase": "message",
+      "subject": "user_213",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 587,
+      "candidates_tokens": 92,
+      "total_tokens": 679,
+      "elapsed_seconds": 0.96
+    },
+    {
+      "phase": "message",
+      "subject": "user_214",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 593,
+      "candidates_tokens": 84,
+      "total_tokens": 677,
+      "elapsed_seconds": 0.96
+    },
+    {
+      "phase": "message",
+      "subject": "user_215",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 594,
+      "candidates_tokens": 75,
+      "total_tokens": 669,
+      "elapsed_seconds": 0.99
+    },
+    {
+      "phase": "message",
+      "subject": "user_216",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 590,
+      "candidates_tokens": 109,
+      "total_tokens": 699,
+      "elapsed_seconds": 0.89
+    },
+    {
+      "phase": "message",
+      "subject": "user_219",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 602,
+      "candidates_tokens": 110,
+      "total_tokens": 712,
+      "elapsed_seconds": 0.86
+    },
+    {
+      "phase": "message",
+      "subject": "user_22",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 711,
+      "candidates_tokens": 75,
+      "total_tokens": 786,
+      "elapsed_seconds": 0.81
+    },
+    {
+      "phase": "message",
+      "subject": "user_220",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_tokens": 677,
+      "candidates_tokens": 93,
+      "total_tokens": 770,
+      "elapsed_seconds": 1.19
     }
   ],
   "totals": {
-    "calls": 59,
-    "prompt_tokens": 48587,
-    "candidates_tokens": 5924,
-    "total_tokens": 54511
+    "calls": 128,
+    "prompt_tokens": 92589,
+    "candidates_tokens": 12500,
+    "total_tokens": 105089
   }
 }

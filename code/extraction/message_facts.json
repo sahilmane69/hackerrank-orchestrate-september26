@@ -471,5 +471,764 @@
       "recurring": true,
       "note": "HarborWorks confirmed a first salary of ZAR 31900 effective 2025-02-15."
     }
+  ],
+  "user_141": [
+    {
+      "kind": "settlement_confirmation",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": "event_13032",
+      "recurring": null,
+      "note": "ClearFund confirmed the investment sale proceeds have settled in the cash account."
+    }
+  ],
+  "user_142": [
+    {
+      "kind": "other",
+      "amount": 2040.0,
+      "currency": "USD",
+      "effective_date": "2024-12-15",
+      "target_event_id": null,
+      "recurring": null,
+      "note": "InvoiceFlow reports an invoice payment of USD 2040 approved, with settlement expected on 2024-12-15."
+    }
+  ],
+  "user_143": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "ClaimDesk prize proceeds reached the account after withholding and the claim is closed."
+    }
+  ],
+  "user_144": [
+    {
+      "kind": "salary_change",
+      "amount": 864.0,
+      "currency": "USD",
+      "effective_date": "2026-07-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Cobalt Systems payroll confirmed first salary of USD 864 effective July 15, 2026."
+    }
+  ],
+  "user_145": [
+    {
+      "kind": "salary_change",
+      "amount": 258000.0,
+      "currency": "INR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Regular salary confirmed as INR 258000 with a one-time arrears adjustment of INR 116100."
+    }
+  ],
+  "user_147": [
+    {
+      "kind": "salary_change",
+      "amount": 1529.0,
+      "currency": "EUR",
+      "effective_date": "2026-04-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Regular salary of EUR 1529 resumes on 2026-04-15."
+    }
+  ],
+  "user_148": [
+    {
+      "kind": "settlement_confirmation",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": "event_13663",
+      "recurring": null,
+      "note": "Investment sale proceeds for StackWealth account have settled in the cash account."
+    }
+  ],
+  "user_15": [
+    {
+      "kind": "salary_change",
+      "amount": 1661.0,
+      "currency": "EUR",
+      "effective_date": "2026-01-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "First salary of EUR 1661 confirmed by Riverline Retail payroll, effective 2026-01-15."
+    }
+  ],
+  "user_150": [
+    {
+      "kind": "salary_change",
+      "amount": 893.75,
+      "currency": "EUR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Riverline Retail reduced next salary to EUR 893.75 due to unpaid leave."
+    }
+  ],
+  "user_151": [
+    {
+      "kind": "salary_change",
+      "amount": 46170000.0,
+      "currency": "IDR",
+      "effective_date": "2024-09-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Northstar Labs confirmed first salary of IDR 46,170,000 effective 2024-09-15."
+    }
+  ],
+  "user_152": [
+    {
+      "kind": "settlement_confirmation",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": "event_14026",
+      "recurring": null,
+      "note": "Reimbursement work expense claim is closed and settled with no further payments scheduled."
+    }
+  ],
+  "user_153": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "ShopNest notified that a bill was charged in a foreign currency, pending final settlement confirmation."
+    }
+  ],
+  "user_154": [
+    {
+      "kind": "salary_change",
+      "amount": 1628.0,
+      "currency": "EUR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Cedar Health confirmed remaining monthly salary is EUR 1628 after one employment record ended."
+    }
+  ],
+  "user_155": [
+    {
+      "kind": "salary_change",
+      "amount": 84000.0,
+      "currency": "INR",
+      "effective_date": "2025-05-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Regular salary of INR 84000 resumes from Greenfield Foods starting 2025-05-15."
+    }
+  ],
+  "user_156": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": "event_14399",
+      "recurring": null,
+      "note": "Bank states the extra card charge dispute is still open and no reversal has been posted yet."
+    }
+  ],
+  "user_157": [
+    {
+      "kind": "salary_change",
+      "amount": 23940000.0,
+      "currency": "IDR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Employer HarborWorks stated temporary monthly salary is IDR 23940000."
+    }
+  ],
+  "user_159": [
+    {
+      "kind": "none",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "ShiftPay payout pending, balance not yet withdrawable."
+    }
+  ],
+  "user_16": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Renewed lease increases monthly rent by 12%, but no specific new monetary amount is provided."
+    }
+  ],
+  "user_160": [
+    {
+      "kind": "salary_change",
+      "amount": 1672.0,
+      "currency": "EUR",
+      "effective_date": "2024-06-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "First salary from Riverline Retail confirmed as EUR 1672, effective June 15, 2024."
+    }
+  ],
+  "user_161": [
+    {
+      "kind": "salary_change",
+      "amount": 26790000.0,
+      "currency": "IDR",
+      "effective_date": "2025-11-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "First salary of IDR 26790000 scheduled for 2025-11-15 from HarborWorks."
+    }
+  ],
+  "user_162": [
+    {
+      "kind": "salary_change",
+      "amount": 29070000.0,
+      "currency": "IDR",
+      "effective_date": "2026-07-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Monthly salary increased to IDR 29,070,000 effective July 15, 2026."
+    }
+  ],
+  "user_163": [
+    {
+      "kind": "salary_change",
+      "amount": 30400000.0,
+      "currency": "IDR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Greenfield Foods updated routine salary to IDR 30,400,000 with a one-time retroactive adjustment of IDR 13,680,000."
+    }
+  ],
+  "user_164": [
+    {
+      "kind": "salary_change",
+      "amount": 44270000.0,
+      "currency": "IDR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Employer BrightPath Media confirmed a base salary of IDR 44,270,000."
+    }
+  ],
+  "user_165": [
+    {
+      "kind": "salary_change",
+      "amount": 0.0,
+      "currency": "INR",
+      "effective_date": "2026-04-03",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Employment with Cedar Health has ended, and no regular salary payments are scheduled after the final settlement."
+    }
+  ],
+  "user_166": [
+    {
+      "kind": "other",
+      "amount": 2340.0,
+      "currency": "USD",
+      "effective_date": "2024-12-15",
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Client approved an invoice payment of USD 2340, expected to settle on 2024-12-15."
+    }
+  ],
+  "user_167": [
+    {
+      "kind": "salary_change",
+      "amount": null,
+      "currency": null,
+      "effective_date": "2025-05-23",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "BrightPath Media confirmed salary expected date is 2025-05-23."
+    }
+  ],
+  "user_168": [
+    {
+      "kind": "salary_change",
+      "amount": 137150.0,
+      "currency": "INR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Next salary reduced to INR 137150 due to approved unpaid leave."
+    }
+  ],
+  "user_169": [
+    {
+      "kind": "bonus_pending",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Foreign-currency refund from CartLane is still processing and pending settlement."
+    }
+  ],
+  "user_170": [
+    {
+      "kind": "bonus_pending",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "WinPoint reward claim verified and pending payout, not yet received."
+    }
+  ],
+  "user_171": [
+    {
+      "kind": "none",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Bank notification regarding internal transfer matching debit and credit transactions."
+    }
+  ],
+  "user_172": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Summit Bank states minimum payments are due on two separate card accounts this month."
+    }
+  ],
+  "user_173": [
+    {
+      "kind": "salary_change",
+      "amount": 1284.0,
+      "currency": "USD",
+      "effective_date": "2025-11-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Greenfield Foods confirmed a salary of USD 1284 for 2025-11-15."
+    }
+  ],
+  "user_175": [
+    {
+      "kind": "salary_change",
+      "amount": 1924.56,
+      "currency": "EUR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Riverline Retail confirmed temporary monthly pay is EUR 1924.56 for the next payroll cycle."
+    }
+  ],
+  "user_176": [
+    {
+      "kind": "salary_change",
+      "amount": 847.0,
+      "currency": "EUR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Cedar Health confirmed a base salary of EUR 847, with commission pending approval."
+    }
+  ],
+  "user_177": [
+    {
+      "kind": "salary_change",
+      "amount": 1731.6,
+      "currency": "USD",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "BrightPath Media salary reduced to USD 1731.60 due to unpaid leave."
+    }
+  ],
+  "user_178": [
+    {
+      "kind": "other",
+      "amount": 2376.0,
+      "currency": "EUR",
+      "effective_date": "2024-12-15",
+      "target_event_id": null,
+      "recurring": null,
+      "note": "FreelanceHub client approved an invoice payment of EUR 2376, expected settlement on 2024-12-15."
+    }
+  ],
+  "user_179": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Phishing message offering a cash reward in exchange for upfront processing fees."
+    }
+  ],
+  "user_18": [
+    {
+      "kind": "none",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Bank notification regarding an internal transfer between two accounts of the same holder."
+    }
+  ],
+  "user_180": [
+    {
+      "kind": "salary_change",
+      "amount": 59000.0,
+      "currency": "INR",
+      "effective_date": "2026-07-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "First salary of INR 59000 confirmed for credit on 2026-07-15 from Northstar Labs."
+    }
+  ],
+  "user_182": [
+    {
+      "kind": "bonus_pending",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Quarterly bonus from BrightPath Media is pending final performance review and payroll approval."
+    }
+  ],
+  "user_183": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "CartLane notification regarding foreign currency billing for order MER-0145 with final amount to be confirmed by bank."
+    }
+  ],
+  "user_184": [
+    {
+      "kind": "bonus_pending",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Foreign-currency refund from BrightBasket is still processing; final home-currency credit pending settlement."
+    }
+  ],
+  "user_185": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "HomePortal states renewed lease increases monthly rent by 12% starting from the next payment."
+    }
+  ],
+  "user_186": [
+    {
+      "kind": "salary_change",
+      "amount": 31889.0,
+      "currency": "ZAR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "HarborWorks notified that the next salary is reduced to ZAR 31889 due to approved unpaid leave."
+    }
+  ],
+  "user_187": [
+    {
+      "kind": "salary_change",
+      "amount": 145000.0,
+      "currency": "INR",
+      "effective_date": "2024-09-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "First salary from BrightPath Media confirmed at INR 145000 effective 2024-09-15."
+    }
+  ],
+  "user_188": [
+    {
+      "kind": "settlement_confirmation",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": "event_17401",
+      "recurring": null,
+      "note": "Cedar Health payroll confirmed the work expense reimbursement claim is closed and no further payments are scheduled."
+    }
+  ],
+  "user_189": [
+    {
+      "kind": "salary_change",
+      "amount": 627.0,
+      "currency": "EUR",
+      "effective_date": "2026-07-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Monthly salary at HarborWorks increased to EUR 627 effective July 15, 2026."
+    }
+  ],
+  "user_191": [
+    {
+      "kind": "bonus_pending",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": "event_17662",
+      "recurring": null,
+      "note": "UrbanCart refund of EUR 65.12 is initiated and pending settlement within ten business days."
+    }
+  ],
+  "user_193": [
+    {
+      "kind": "salary_change",
+      "amount": 1750.32,
+      "currency": "EUR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Cedar Health set temporary monthly pay to EUR 1750.32 for the next payroll."
+    }
+  ],
+  "user_194": [
+    {
+      "kind": "salary_change",
+      "amount": null,
+      "currency": null,
+      "effective_date": "2025-08-23",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Northstar Labs updated the expected salary payment date to August 23, 2025."
+    }
+  ],
+  "user_195": [
+    {
+      "kind": "salary_change",
+      "amount": 1222.65,
+      "currency": "EUR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "HarborWorks payroll states next salary is reduced to EUR 1222.65 due to unpaid leave."
+    }
+  ],
+  "user_197": [
+    {
+      "kind": "salary_change",
+      "amount": 38190000.0,
+      "currency": "IDR",
+      "effective_date": "2025-11-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Cedar Health scheduled the first salary payment of IDR 38,190,000 for November 15, 2025."
+    }
+  ],
+  "user_198": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": "event_18269",
+      "recurring": null,
+      "note": "Bank reports that the dispute for the extra card charge remains open and no reversal has been posted yet."
+    }
+  ],
+  "user_199": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "ShiftPay payment is currently pending and cannot be withdrawn yet."
+    }
+  ],
+  "user_20": [
+    {
+      "kind": "bonus_pending",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": "event_1785",
+      "recurring": null,
+      "note": "CartLane refund of INR 8640.0 has been initiated but is still pending settlement."
+    }
+  ],
+  "user_200": [
+    {
+      "kind": "bonus_pending",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Quarterly bonus from HarborWorks is pending final performance review and approval."
+    }
+  ],
+  "user_201": [
+    {
+      "kind": "salary_change",
+      "amount": 0.0,
+      "currency": "IDR",
+      "effective_date": "2026-03-26",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Seasonal contract ended with Northstar Labs payroll, currently no income or contract extension confirmed."
+    }
+  ],
+  "user_202": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Bank notification states minimum payments are due on two separate card accounts this month."
+    }
+  ],
+  "user_204": [
+    {
+      "kind": "salary_change",
+      "amount": 2024.0,
+      "currency": "EUR",
+      "effective_date": "2026-01-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "First salary from BrightPath Media confirmed as EUR 2024, crediting on 2026-01-15."
+    }
+  ],
+  "user_208": [
+    {
+      "kind": "none",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "Informational message about fluctuating unrealized investment value with no new financial facts."
+    }
+  ],
+  "user_210": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": "event_19334",
+      "recurring": null,
+      "note": "Bank dispute is still open for the extra card charge, no reversal posted yet."
+    }
+  ],
+  "user_212": [
+    {
+      "kind": "salary_change",
+      "amount": null,
+      "currency": null,
+      "effective_date": "2025-02-23",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Greenfield Foods confirmed salary payout date is updated to 2025-02-23 (Ref: EMP-0165)."
+    }
+  ],
+  "user_213": [
+    {
+      "kind": "salary_change",
+      "amount": null,
+      "currency": null,
+      "effective_date": "2025-12-30",
+      "target_event_id": null,
+      "recurring": false,
+      "note": "HarborWorks seasonal contract ended; no off-season income or renewal confirmed."
+    }
+  ],
+  "user_214": [
+    {
+      "kind": "bonus_pending",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "BrightBasket foreign-currency refund is still processing, final home-currency credit pending settlement."
+    }
+  ],
+  "user_215": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "QuickCrew payout is pending and not yet withdrawable."
+    }
+  ],
+  "user_216": [
+    {
+      "kind": "salary_change",
+      "amount": 2424.0,
+      "currency": "USD",
+      "effective_date": "2026-07-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Cobalt Systems increased monthly salary to USD 2424 starting 2026-07-15."
+    }
+  ],
+  "user_219": [
+    {
+      "kind": "salary_change",
+      "amount": 1914.0,
+      "currency": "EUR",
+      "effective_date": "2026-04-15",
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Regular salary of EUR 1914 resumes on 2026-04-15 from BrightPath Media."
+    }
+  ],
+  "user_22": [
+    {
+      "kind": "other",
+      "amount": null,
+      "currency": null,
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": null,
+      "note": "ClearFund portfolio market value increased with unrealized gains."
+    }
+  ],
+  "user_220": [
+    {
+      "kind": "salary_change",
+      "amount": 1346.4,
+      "currency": "EUR",
+      "effective_date": null,
+      "target_event_id": null,
+      "recurring": true,
+      "note": "Temporary monthly pay updated to EUR 1346.40 for the next payroll cycle."
+    }
   ]
 }

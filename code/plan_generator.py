@@ -49,6 +49,7 @@ def plan_is_safe(
     payments: list[Payment],
     spending_changes: list[SpendingChange],
     exchange_rates: pd.DataFrame | None,
+    salary_override: dict[str, Any] | None = None,
 ) -> bool:
     result = forecast_90_days(
         request,
@@ -57,6 +58,7 @@ def plan_is_safe(
         extra_payments=extra_payments_from(payments),
         spending_changes=spending_changes,
         exchange_rates=exchange_rates,
+        salary_override=salary_override,
     )
     return result.is_safe
 
@@ -171,6 +173,7 @@ def _evaluate(
     payment_option_id: str | None = None,
     total_paid: float | None = None,
     notes: str = "",
+    salary_override: dict[str, Any] | None = None,
 ) -> CandidatePlan:
     last = max((payment.pay_date for payment in payments), default=None)
     meets_deadline = last is not None and last <= deadline
@@ -184,7 +187,13 @@ def _evaluate(
     safe = False
     if payments:
         safe = plan_is_safe(
-            request, profile, events, payments, spending_changes, exchange_rates
+            request,
+            profile,
+            events,
+            payments,
+            spending_changes,
+            exchange_rates,
+            salary_override,
         )
     eligible = eligible_method and safe and bool(payments)
     return CandidatePlan(
@@ -206,6 +215,7 @@ def generate_candidates(
     events: pd.DataFrame,
     payment_options: pd.DataFrame,
     exchange_rates: pd.DataFrame | None = None,
+    salary_override: dict[str, Any] | None = None,
 ) -> tuple[list[CandidatePlan], float, date | None]:
     request_date = parse_date(request["request_date"])
     deadline = parse_date(request["desired_completion_date"])
@@ -218,10 +228,18 @@ def generate_candidates(
     max_months = user_max_installment_months(profile)
 
     safe_today, unpaid_forecast = amount_safe_to_pay(
-        request, profile, events, exchange_rates=exchange_rates
+        request,
+        profile,
+        events,
+        exchange_rates=exchange_rates,
+        salary_override=salary_override,
     )
     earliest = earliest_full_payment_date(
-        request, profile, events, exchange_rates=exchange_rates
+        request,
+        profile,
+        events,
+        exchange_rates=exchange_rates,
+        salary_override=salary_override,
     )
     change_sets = spending_change_sets(
         eligible_spending_actions(unpaid_forecast.recurring_streams, profile)
@@ -244,6 +262,7 @@ def generate_candidates(
                 deadline,
                 accepted,
                 notes="full payment on request_date",
+                salary_override=salary_override,
             )
         )
 
@@ -273,6 +292,7 @@ def generate_candidates(
                 accepted,
                 total_paid=requested,
                 notes="two-part plan using amount_safe_to_pay",
+                salary_override=salary_override,
             )
         )
 
@@ -312,6 +332,7 @@ def generate_candidates(
                     payment_option_id=option_id,
                     total_paid=total_payable,
                     notes=f"supplied option {option_id}",
+                    salary_override=salary_override,
                 )
             )
 
@@ -334,6 +355,7 @@ def generate_candidates(
                     accepted,
                     total_paid=requested,
                     notes="wait for earliest safe full payment",
+                    salary_override=salary_override,
                 )
             )
 
