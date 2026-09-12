@@ -57,6 +57,9 @@ class RecurringStream:
     source_event_id: str = ""
     flexibility: str = "fixed"
     minimum_allowed_amount: float | None = None
+    # Optional mid-forecast salary change (from message evidence).
+    amount_change_date: date | None = None
+    amount_after: float | None = None
 
 
 @dataclass
@@ -461,7 +464,14 @@ def merge_projected_flows(
                     break
             if already_covered:
                 continue
-            signed = stream.amount if stream.direction == "credit" else -stream.amount
+            amount = stream.amount
+            if (
+                stream.amount_after is not None
+                and stream.amount_change_date is not None
+                and hit >= stream.amount_change_date
+            ):
+                amount = stream.amount_after
+            signed = amount if stream.direction == "credit" else -amount
             merged[hit].append((signed, stream.category, stream.source_event_id or f"projected:{stream.category}"))
     return merged
 
