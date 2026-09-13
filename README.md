@@ -1,205 +1,178 @@
-# Buy or Wait? — AI-Powered Financial Decision Agent
+# Buy or Wait?
 
-Winner-grade solution for the **HackerRank Orchestrate** hackathon challenge: **Buy or Wait?**
+An AI-assisted financial decision agent built for the HackerRank Orchestrate challenge.
 
-An intelligent financial agent that evaluates purchase requests against conservative 90-day cash flow forecasts, personalized user commitments, fixed dated exchange rates, and unstructured third-party evidence from document images and messages.
+The system evaluates whether a user can safely afford a requested expense by combining a conservative 90-day cash-flow forecast with structured evidence extracted from messages and financial documents.
 
----
+## Key Results
 
-## 1. Problem Summary
+- Processes all **250 financial requests**
+- Produces exactly **250 unique output rows**
+- Passes the submission contract validator
+- Passes **27 automated tests**
+- Runs deterministically without an API key using cached evidence
+- Achieved **48% full exact-match accuracy** on the provided labeled samples
 
-Given purchase or payment requests in `dataset/requests.csv`, the agent decides whether the user should:
-- **Pay in full today** (`affordable_now` / `full_payment`)
-- **Pay using installments or partial payment or permitted spending changes** (`affordable_with_plan`)
-- **Wait until a safe future date** (`affordable_later` / `wait`)
-- **Do not proceed** (`not_affordable` / `not_recommended`)
+## How It Works
 
-A decision is safe **only if**:
-1. The user's account balance never drops below `minimum_balance_to_keep` on any day over the next 90 days after all planned payments and projected essential expenses.
-2. The full purchase is completed on or before `desired_completion_date`.
-3. Intra-day transactions maintain safety (debits always clear before credits).
-
----
-
-## 2. Architecture
-
-The system enforces a strict boundary between deterministic financial mathematics and AI evidence extraction:
-
-```text
-┌─────────────────────────────────────────────────────────────┐
-│                    UNTRUSTED EVIDENCE                       │
-│  - Document Images (png)        - Financial Messages (csv)  │
-└───────────────┬─────────────────────────────┬───────────────┘
-                │                             │
-                ▼                             ▼
-   ┌────────────────────────┐    ┌────────────────────────┐
-   │  Gemini Vision (Image) │    │  Gemini Flash (Message)│
-   │  Extracts amounts,     │    │  Extracts revisions,   │
-   │  dates, doc type       │    │  confirmed salaries    │
-   └────────────┬───────────┘    └────────────┬───────────┘
-                │                             │
-                └──────────────┬──────────────┘
-                               │ Structured JSON Facts
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│              DETERMINISTIC PYTHON ENGINE                    │
-│                                                             │
-│  1. Forecast Module (`code/forecast.py`)                   │
-│     - 90-day daily cashflow projection                      │
-│     - Intra-day debit-before-credit order                   │
-│     - Historical salary recurrence suppressed               │
-│     - Dated FX rate conversions                             │
-│     - Binary-search exact `amount_safe_to_pay`              │
-│                                                             │
-│  2. Candidate Generator & Decision Engine (`code/plans.py`) │
-│     - Candidate 1: Full payment today                       │
-│     - Candidate 2: Partial payment (exact 2-part schedule)  │
-│     - Candidate 3: Supplied provider installment options    │
-│     - Candidate 4: Wait until earliest safe date            │
-│     - Candidate 5: Flexible spending change combinations    │
-│     - Candidate 6: Fallback (not recommended)               │
-│     - Strict hierarchical ranking (contract rules 1 to 6)   │
-│     - Grounded, audit-ready explanations                    │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  EVALUABLE OUTPUT CONTRACT                  │
-│       `dataset/output.csv`  &  `output.csv` (250 rows)       │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A[CSV data, messages and images] --> B[Evidence extraction]
+    B --> C[Validated structured facts]
+    C --> D[90-day cash-flow forecast]
+    D --> E[Candidate payment plans]
+    E --> F[Safety checks and ranking]
+    F --> G[output.csv]
 ```
 
----
+The architecture deliberately separates AI from financial decision-making:
 
-## 3. Repository Structure
+- **Gemini** is used only to extract structured facts from messages and document images.
+- **Deterministic Python** handles currency conversion, forecasting, payment-plan generation, safety validation and final ranking.
+- Cached evidence allows the submitted solution to run offline without credentials or additional API calls.
+
+## Decisions Produced
+
+For every request, the agent determines:
+
+- Maximum amount safe to pay today
+- Affordability status
+- Recommended payment method
+- Payment schedule
+- Earliest safe full-payment date
+- Required flexible-spending changes
+- Concise decision explanation
+
+The engine considers full payment, partial payment, provider installments, waiting, spending adjustments and a safe fallback.
+
+## Repository Structure
 
 ```text
 code/
-├── main.py              # Main execution entry point (evaluates requests -> output.csv)
-├── config.py            # Global paths, environment configuration, and usage tracker
-├── data.py              # Dataset loading, validation, and O(1) index builders
-├── models.py            # Dataclasses and Pydantic validation schemas
-├── forecast.py          # Deterministic 90-day cash forecasting & binary search
-├── plans.py             # Candidate generation, ranking rules, and decision engine
-├── evidence.py          # Gemini evidence extraction for images and messages with cache
-├── evaluation/
-│   ├── __init__.py      # Evaluation package marker
-│   └── main.py          # Output contract validator and ground-truth sample evaluator
-└── usage_report.md      # Final API token and cost summary
+â”œâ”€â”€ main.py                 # Main pipeline
+â”œâ”€â”€ config.py               # Paths and configuration
+â”œâ”€â”€ data.py                 # Dataset loading and validation
+â”œâ”€â”€ evidence.py             # Message and image evidence handling
+â”œâ”€â”€ forecast.py             # Deterministic 90-day forecast
+â”œâ”€â”€ models.py               # Domain and validation models
+â”œâ”€â”€ plans.py                # Candidate generation and ranking
+â”œâ”€â”€ extraction_cache/       # Validated evidence for offline execution
+â””â”€â”€ evaluation/
+    â”œâ”€â”€ __init__.py
+    â”œâ”€â”€ main.py             # Contract validator and sample evaluator
+    â””â”€â”€ usage_report.md     # Model usage report
 
-tests/
-├── test_data.py         # CSV loading, parsing, and indexing tests
-├── test_forecast.py     # 90-day simulation, currency conversion, and safety tests
-├── test_plans.py        # Candidate generation, ranking, and payment method tests
-├── test_evidence.py     # Extraction schemas, prompt injection, and cache tests
-└── test_output.py       # Contract schema, row count, and output integrity tests
-
-dataset/                 # Competition dataset files
-README.md                # This documentation
-requirements.txt         # Minimal production dependencies
-.env.example             # Template for API credentials
-.gitignore               # Clean exclusions (no caches, logs, or secrets)
+dataset/                    # Challenge inputs and generated dataset output
+tests/                      # Unit and regression tests
+output.csv                  # Final submission output
+requirements.txt            # Python dependencies
+.env.example                # Optional Gemini configuration template
 ```
 
----
+## Setup
 
-## 4. Setup Instructions
+Python 3.10 or newer is required.
 
-1. **Prerequisites**: Python 3.10+ (tested on Python 3.14).
-2. **Virtual Environment**:
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-3. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **Configure Environment Variables**:
-   Copy `.env.example` to `.env` and provide your Gemini API key:
-   ```bash
-   cp .env.example .env
-   ```
-   Edit `.env`:
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   GEMINI_MODEL=gemini-2.5-flash
-   ```
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
----
+The included evidence cache is sufficient for normal offline execution. A Gemini API key is needed only when regenerating evidence from the source messages and images.
 
-## 5. Execution & Entry Points
+Optional configuration:
 
-### Run the Main Pipeline
-Evaluates all 250 requests in `dataset/requests.csv` and outputs predictions:
+```bash
+cp .env.example .env
+```
+
+```env
+GEMINI_API_KEY=your_key_here
+GEMINI_MODEL=gemini-2.5-flash
+```
+
+The `.env` file is ignored by Git and must never be committed.
+
+## Run
+
+Generate the final output:
+
 ```bash
 python code/main.py
 ```
-Output is written to both `dataset/output.csv` and `output.csv`.
 
-### Run the Contract Validator & Sample Evaluator
-Validates schema compliance and evaluates predictions against labeled sample requests:
+The pipeline writes identical results to:
+
+- `output.csv`
+- `dataset/output.csv`
+
+Validate the submission contract and evaluate labeled samples:
+
 ```bash
 python code/evaluation/main.py
 ```
 
-### Run Automated Tests
-Runs all unit and regression tests:
+Run all tests:
+
 ```bash
-python -m pytest
+python -m pytest -q
 ```
 
----
+## Financial Safety Model
 
-## 6. Deterministic Financial Engine
+The deterministic engine:
 
-- **Cash Flow Projection**: Simulates exactly 91 daily balances (Day 0 through Day 90).
-- **Intra-Day Ordering**: All daily debits clear before any credits on the same calendar date, preventing overdraft hazards.
-- **Safety Boundary**: The daily closing balance and intra-day lowest balance must never violate `minimum_balance_to_keep`.
-- **Amount Safe To Pay**: Evaluated via binary search in integer cents up to `requested_amount`.
-- **Earliest Full Payment Date**: Identifies the first future calendar date where paying `requested_amount` in full preserves the minimum balance for the subsequent 90 days.
-- **Spending Adjustments**: Supports up to three `stop:<event_id>` or `reduce_to:<event_id>:<new_amount>` modifications, strictly limited to non-protected categories permitted by the user's profile.
+- Simulates daily balances across the 90-day forecast period
+- Processes same-day debits before credits
+- Protects the user's preferred minimum balance
+- Converts currencies using dated exchange rates
+- Excludes vague, unconfirmed and unresolved income
+- Prevents settled historical income from being counted again
+- Validates all payment dates against the requested deadline
+- Limits spending adjustments to eligible flexible expenses
+- Uses stable tie-breaking rules to select one reproducible plan
 
----
+## Evidence Safety
 
-## 7. Gemini Evidence Extraction
+Messages and images are treated as untrusted input.
 
-- **Official SDK**: Utilizes modern `google-genai` (`from google import genai`).
-- **Vision Extraction**: Resolves missing event amounts in `dataset/financial_events.csv` via receipts, payslips, and invoices in `dataset/media/images/`.
-- **Message Batching**: Processes messages grouped by user context in efficient batches of 10 to minimize API latency and token consumption.
-- **Deterministic Disk Caching**: Extracted facts are persisted in `code/extraction_cache/`, ensuring instantaneous, zero-cost, reproducible execution on subsequent runs.
-- **Deterministic Calculation Guarantee**: The LLM is strictly confined to parsing text and document images into structured facts. Balance math, cashflow forecasts, candidate generation, and ranking are executed purely in Python.
+- Embedded instructions are ignored during extraction
+- Evidence must match strict Pydantic schemas
+- External references cannot replace dataset event IDs
+- Confirmed income requires both a positive amount and a valid date
+- Missing values remain unresolved instead of being guessed
+- API credentials are never written to logs or submission artifacts
 
----
+## Output Contract
 
-## 8. Safety & Prompt-Injection Defenses
+The generated CSV contains the eight required columns:
 
-1. **Untrusted Data Boundary**: All message texts and images are treated as untrusted third-party records. System prompts enforce that embedded directives or overrides are completely ignored.
-2. **Event ID Integrity**: Pydantic validators reject external reference strings (e.g. `EMP-0001`, `SER-0012`) and require real `event_*` dataset identifiers.
-3. **Conservative Income Rule**: Vague salary notices without an explicit numerical amount and settlement date never generate spendable income.
-4. **Secret Protection**: `.env`, API keys, session logs (`log.txt`), and temporary caches are strictly excluded via `.gitignore` and never printed to terminal or committed.
+| Column | Purpose |
+| --- | --- |
+| `request_id` | Original request identifier |
+| `amount_safe_to_pay` | Maximum safe amount payable today |
+| `affordability_status` | Overall affordability classification |
+| `recommended_payment_method` | Selected payment strategy |
+| `payment_plan` | Chronological payment schedule |
+| `earliest_date_for_full_payment` | First safe full-payment date |
+| `spending_changes_needed` | Required eligible expense adjustments |
+| `decision_explanation` | Grounded explanation of the recommendation |
 
----
+## Verification
 
-## 9. Output Format
+The final package was extracted into a clean temporary directory and tested using a newly created virtual environment with `GEMINI_API_KEY` unset.
 
-The solution outputs `dataset/output.csv` (and root `output.csv`) with the exact eight required columns:
+| Check | Result |
+| --- | --- |
+| Automated tests | 27 passed |
+| Output rows | 250 |
+| Unique request IDs | 250 |
+| Submission validator | Passed |
+| Offline execution | Passed |
+| Deterministic output comparison | Byte-identical |
+| Full sample exact match | 48% |
 
-| Column | Description | Valid Values |
-|---|---|---|
-| `request_id` | Identifier matching requests.csv | `request_01` .. `request_250` |
-| `amount_safe_to_pay` | Safe payment today before spending changes | Numeric float `[0.0, requested_amount]` |
-| `affordability_status` | Classification of request affordability | `affordable_now`, `affordable_with_plan`, `affordable_later`, `not_affordable` |
-| `recommended_payment_method` | Selected payment strategy | `full_payment`, `partial_payment`, `installments`, `wait`, `not_recommended` |
-| `payment_plan` | Chronological schedule of payments | `YYYY-MM-DD:amount\|...` or `none` |
-| `earliest_date_for_full_payment` | First safe date for full single payment | ISO `YYYY-MM-DD` or empty |
-| `spending_changes_needed` | Required spending modifications | Up to 3 `stop:<event_id>` / `reduce_to:...` or `none` |
-| `decision_explanation` | Grounded explanation for user | Concise, professional summary string |
+## Design Principle
 
----
-
-## 10. Assumptions & Limitations
-
-- **Fixed Dated FX Rates**: Currency conversions use fixed historical exchange rates from `exchange_rates.csv` on the transaction date.
-- **Conservative Recurrence**: Historical salary credits are not assumed to repeat automatically unless confirmed by upcoming scheduled events or verified employer payroll notices.
-- **Pending Debits**: Pending debits are reserved immediately; pending credits/bonuses are never credited until settled.
+AI extracts evidence; deterministic code makes the financial decision. This boundary keeps every recommendation reproducible, auditable and safe to evaluate.
