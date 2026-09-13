@@ -239,22 +239,16 @@ def _detect_salary_streams(
     override_amt = u_info.get("override_amount")
     override_day = u_info.get("override_day")
 
-    # Check future scheduled salary events
+    # Scheduled future salary rows cash exactly once via explicit_cashflows;
+    # here they only serve as evidence that an existing payroll continues.
     future_sal = pd.DataFrame()
     if not events.empty and "category" in events.columns and "direction" in events.columns:
         future_sal = events[
             (events["category"] == "salary")
             & (events["direction"] == "credit")
+            & (events["status"].isin(["scheduled", "pending"]))
             & (events["settlement_date"] >= request_date.isoformat())
         ]
-    if not future_sal.empty and override_amt is None:
-        fs = future_sal.iloc[0]
-        amt = event_home_amount(fs, home_currency, rate_lookup, skipped, blank_amounts=blank_amounts)
-        sdt = parse_date(getattr(fs, "settlement_date", None))
-        if amt and amt > 0:
-            override_amt = amt
-            if sdt and override_day is None:
-                override_day = sdt.day
 
     # Check settled historical salary events
     settled_sal = pd.DataFrame()
@@ -267,31 +261,10 @@ def _detect_salary_streams(
         ]
 
     # If the last historical payroll is marked "Final employer payroll", contract ended
-    if not settled_sal.empty and override_amt is None:
+    if not settled_sal.empty:
         last_desc = str(settled_sal.iloc[-1].get("description", "")).lower()
         if "final" in last_desc:
             return []
-
-    if settled_sal.empty and override_amt is None:
-        return []
-
-    if override_amt is not None:
-        day = override_day if override_day is not None else 15
-        return [
-            RecurringStream(
-                event_type="income",
-                category="salary",
-                direction="credit",
-                amount=override_amt,
-                interval="monthly",
-                interval_days=None,
-                day_of_month=day,
-                last_date=request_date - timedelta(days=20),
-                occurrences=5,
-                source_event_id="salary_stream",
-                flexibility="fixed",
-            )
-        ]
 
     # Cluster settled history by day of month (filtering out unconfirmed commission events)
     day_groups: dict[int, list[tuple[date, float]]] = defaultdict(list)
@@ -310,26 +283,69 @@ def _detect_salary_streams(
             target_day = matched_day if matched_day is not None else c_on.day
             day_groups[target_day].append((c_on, amt))
 
+    if override_amt is not None:
+        # Message evidence confirms an ongoing payroll: project it, preferring
+        # the evidenced payday, else the dominant settled payday.
+        day = override_day
+        if day is None:
+            if day_groups:
+                day = max(day_groups.items(), key=lambda kv: len(kv[1]))[0]
+            else:
+                day = 15
+        hist_dates: list[date] = sorted(
+            d for items in day_groups.values() for d, _ in items
+        )
+        last_date = hist_dates[-1] if hist_dates else request_date - timedelta(days=20)
+        return [
+            RecurringStream(
+                event_type="income",
+                category="salary",
+                direction="credit",
+                amount=override_amt,
+                interval="monthly",
+                interval_days=None,
+                day_of_month=day,
+                last_date=last_date,
+                occurrences=max(len(hist_dates), 1),
+                source_event_id="salary_stream",
+                flexibility="fixed",
+            )
+        ]
+
+    # Without message evidence, only a strong settled payroll justifies
+    # projecting future income: either a long uninterrupted history, or a
+    # solid history whose next paycheck is already scheduled for the same
+    # payday. A scheduled salary row still cashes only once via explicit
+    # flows; it counts here solely as evidence of continuation.
     streams: list[RecurringStream] = []
     for day, items in day_groups.items():
-        if len(items) >= 2 or not future_sal.empty:
-            amounts = [x[1] for x in items]
-            stream_amt = median(amounts[-3:]) if len(amounts) >= 3 else amounts[-1]
-            streams.append(
-                RecurringStream(
-                    event_type="income",
-                    category="salary",
-                    direction="credit",
-                    amount=stream_amt,
-                    interval="monthly",
-                    interval_days=None,
-                    day_of_month=day,
-                    last_date=items[-1][0],
-                    occurrences=len(items),
-                    source_event_id=f"salary_stream_{day}",
-                    flexibility="fixed",
-                )
+        strong_history = len(items) >= 5
+        matching_scheduled = False
+        if len(items) >= 3 and not future_sal.empty:
+            for fs in future_sal.itertuples(index=False):
+                fs_date = parse_date(getattr(fs, "settlement_date", None))
+                if fs_date is not None and abs(fs_date.day - day) <= 2:
+                    matching_scheduled = True
+                    break
+        if not (strong_history or matching_scheduled):
+            continue
+        amounts = [x[1] for x in items]
+        stream_amt = median(amounts[-3:]) if len(amounts) >= 3 else amounts[-1]
+        streams.append(
+            RecurringStream(
+                event_type="income",
+                category="salary",
+                direction="credit",
+                amount=stream_amt,
+                interval="monthly",
+                interval_days=None,
+                day_of_month=day,
+                last_date=items[-1][0],
+                occurrences=len(items),
+                source_event_id=f"salary_stream_{day}",
+                flexibility="fixed",
             )
+        )
     return streams
 
 
@@ -717,6 +733,7 @@ def forecast_90_days(
     confirmed_incomes: list[dict[str, Any]] | None = None,
     cancelled_events: set[str] | None = None,
     amended_events: dict[str, dict[str, Any]] | None = None,
+    user_salary_info: dict[str, dict[str, Any]] | None = None,
 ) -> ForecastResult:
     """Simulate balances from request_date through the next 90 days."""
     request_date = parse_date(request["request_date"])
@@ -735,8 +752,15 @@ def forecast_90_days(
     skipped: list[str] = []
     rate_lookup = build_rate_lookup(exchange_rates)
 
+    user_id = str(request.get("user_id", "")) or None
     streams = detect_recurring_streams(
-        events, request_date, home_currency, rate_lookup, skipped
+        events,
+        request_date,
+        home_currency,
+        rate_lookup,
+        skipped,
+        user_id=user_id,
+        user_salary_info=user_salary_info,
     )
     streams = apply_spending_changes(streams, spending_changes)
     explicit = explicit_cashflows(
@@ -787,6 +811,7 @@ def earliest_full_payment_date(
     confirmed_incomes: list[dict[str, Any]] | None = None,
     cancelled_events: set[str] | None = None,
     amended_events: dict[str, dict[str, Any]] | None = None,
+    user_salary_info: dict[str, dict[str, Any]] | None = None,
 ) -> date | None:
     """First date a single full payment is 90-day-safe, with no spending changes."""
     requested = to_number(request["requested_amount"], "requested_amount")
@@ -807,6 +832,7 @@ def earliest_full_payment_date(
             confirmed_incomes=confirmed_incomes,
             cancelled_events=cancelled_events,
             amended_events=amended_events,
+            user_salary_info=user_salary_info,
         )
         if result.is_safe:
             return cursor
@@ -823,6 +849,7 @@ def amount_safe_to_pay(
     confirmed_incomes: list[dict[str, Any]] | None = None,
     cancelled_events: set[str] | None = None,
     amended_events: dict[str, dict[str, Any]] | None = None,
+    user_salary_info: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[float, ForecastResult]:
     """
     Largest payment on request_date that still keeps every forecast day
@@ -841,6 +868,7 @@ def amount_safe_to_pay(
         confirmed_incomes=confirmed_incomes,
         cancelled_events=cancelled_events,
         amended_events=amended_events,
+        user_salary_info=user_salary_info,
     )
     if requested == 0 or not zero_case.is_safe:
         zero_case.amount_safe_to_pay = 0.0
@@ -856,6 +884,7 @@ def amount_safe_to_pay(
         confirmed_incomes=confirmed_incomes,
         cancelled_events=cancelled_events,
         amended_events=amended_events,
+        user_salary_info=user_salary_info,
     )
     if full.is_safe:
         full.amount_safe_to_pay = requested
@@ -878,6 +907,7 @@ def amount_safe_to_pay(
             confirmed_incomes=confirmed_incomes,
             cancelled_events=cancelled_events,
             amended_events=amended_events,
+            user_salary_info=user_salary_info,
         )
         if result.is_safe:
             best_cents = mid_cents

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import re
 from datetime import date, timedelta
 from itertools import combinations
 from typing import Any
@@ -28,10 +29,10 @@ from models import (
 
 
 def parse_methods(raw: Any) -> set[str]:
-    """Parse comma-separated accepted payment methods into lowercase tokens."""
+    """Parse pipe-separated (or comma-separated) list values into lowercase tokens."""
     if raw is None or (isinstance(raw, float) and pd.isna(raw)):
         return set()
-    return {part.strip().lower() for part in str(raw).split(",") if part.strip()}
+    return {part.strip().lower() for part in re.split(r"[,|]", str(raw)) if part.strip()}
 
 
 def parse_bool(raw: Any) -> bool:
@@ -108,9 +109,12 @@ def eligible_spending_actions(
 ) -> list[SpendingChange]:
     """Find stopping/reducing actions permitted by user preferences."""
     user_reductions = parse_methods(
-        profile.get("spending_categories_user_will_reduce")
+        profile.get("expense_categories_user_is_willing_to_reduce")
     )
-    protected = parse_methods(profile.get("protected_spending_categories"))
+    user_stops = parse_methods(
+        profile.get("expense_categories_user_is_willing_to_stop")
+    )
+    protected = parse_methods(profile.get("expense_categories_to_protect"))
     actions: list[SpendingChange] = []
     seen: set[str] = set()
 
@@ -124,13 +128,16 @@ def eligible_spending_actions(
         cat = stream.category.lower()
         if cat in protected:
             continue
-        if cat not in user_reductions:
-            continue
 
-        if stream.flexibility == "stoppable":
+        flexibility = str(stream.flexibility or "fixed").strip().lower()
+        if flexibility == "stoppable" or flexibility == "reducible_or_stoppable":
+            if cat not in user_stops:
+                continue
             seen.add(stream.source_event_id)
             actions.append(SpendingChange("stop", stream.source_event_id))
-        elif stream.flexibility == "reducible":
+        elif flexibility == "reducible":
+            if cat not in user_reductions:
+                continue
             min_allowed = stream.minimum_allowed_amount
             if min_allowed is not None and min_allowed < stream.amount:
                 seen.add(stream.source_event_id)
@@ -169,6 +176,7 @@ def _evaluate(
     confirmed_incomes: list[dict[str, Any]] | None = None,
     cancelled_events: set[str] | None = None,
     amended_events: dict[str, dict[str, Any]] | None = None,
+    user_salary_info: dict[str, dict[str, Any]] | None = None,
 ) -> CandidatePlan:
     """Simulate a candidate plan across 90 days and verify safety and deadline constraints."""
     if total_paid is None:
@@ -205,6 +213,7 @@ def _evaluate(
         confirmed_incomes=confirmed_incomes,
         cancelled_events=cancelled_events,
         amended_events=amended_events,
+        user_salary_info=user_salary_info,
     )
 
     return CandidatePlan(
@@ -230,6 +239,7 @@ def generate_candidates(
     confirmed_incomes: list[dict[str, Any]] | None = None,
     cancelled_events: set[str] | None = None,
     amended_events: dict[str, dict[str, Any]] | None = None,
+    user_salary_info: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[list[CandidatePlan], float, date | None]:
     """Generate all candidate plans for a request."""
     request_date = parse_date(request["request_date"])
@@ -251,6 +261,7 @@ def generate_candidates(
         confirmed_incomes=confirmed_incomes,
         cancelled_events=cancelled_events,
         amended_events=amended_events,
+        user_salary_info=user_salary_info,
     )
     earliest = earliest_full_payment_date(
         request,
@@ -261,6 +272,7 @@ def generate_candidates(
         confirmed_incomes=confirmed_incomes,
         cancelled_events=cancelled_events,
         amended_events=amended_events,
+        user_salary_info=user_salary_info,
     )
     change_sets = spending_change_sets(
         eligible_spending_actions(unpaid_forecast.recurring_streams, profile)
@@ -287,6 +299,7 @@ def generate_candidates(
                 confirmed_incomes=confirmed_incomes,
                 cancelled_events=cancelled_events,
                 amended_events=amended_events,
+                user_salary_info=user_salary_info,
             )
         )
 
@@ -320,6 +333,7 @@ def generate_candidates(
                 confirmed_incomes=confirmed_incomes,
                 cancelled_events=cancelled_events,
                 amended_events=amended_events,
+                user_salary_info=user_salary_info,
             )
         )
 
@@ -367,6 +381,7 @@ def generate_candidates(
                     confirmed_incomes=confirmed_incomes,
                     cancelled_events=cancelled_events,
                     amended_events=amended_events,
+                    user_salary_info=user_salary_info,
                 )
             )
 
@@ -390,6 +405,7 @@ def generate_candidates(
                 confirmed_incomes=confirmed_incomes,
                 cancelled_events=cancelled_events,
                 amended_events=amended_events,
+                user_salary_info=user_salary_info,
             )
         )
 
@@ -523,6 +539,7 @@ def make_decision(
     confirmed_incomes: list[dict[str, Any]] | None = None,
     cancelled_events: set[str] | None = None,
     amended_events: dict[str, dict[str, Any]] | None = None,
+    user_salary_info: dict[str, dict[str, Any]] | None = None,
 ) -> Decision:
     """Generate all candidates, rank them deterministically, and construct the Decision."""
     request_id = str(request["request_id"])
@@ -540,6 +557,7 @@ def make_decision(
         confirmed_incomes=confirmed_incomes,
         cancelled_events=cancelled_events,
         amended_events=amended_events,
+        user_salary_info=user_salary_info,
     )
 
     eligible_plans = [p for p in candidates if p.eligible and p.is_safe]

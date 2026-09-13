@@ -17,7 +17,7 @@ if str(CODE_DIR) not in sys.path:
 
 from config import DATASET_DIR, OUTPUT_PATH
 from data import index_datasets, load_dataset_files
-from evidence import build_evidence_lookups
+from evidence import build_evidence_lookups, build_salary_lookups
 from plans import make_decision
 
 
@@ -32,11 +32,13 @@ def main() -> None:
 
     # 2. Load extracted evidence from cache
     blank_amounts, confirmed_incomes, cancelled_events, amended_events = build_evidence_lookups()
+    salary_lookups = build_salary_lookups()
     print(
         f"Loaded evidence: {len(blank_amounts)} image amounts, "
         f"{len(confirmed_incomes)} users with confirmed incomes, "
         f"{len(cancelled_events)} cancelled events, "
-        f"{len(amended_events)} amended events."
+        f"{len(amended_events)} amended events, "
+        f"{len(salary_lookups)} users with salary evidence."
     )
 
     # 3. Pre-index tables by user/request key
@@ -61,6 +63,7 @@ def main() -> None:
         user_events = events_by_user.get(user_id, pd.DataFrame())
         user_options = options_by_req.get(req_id, pd.DataFrame())
         user_incomes = confirmed_incomes.get(user_id, [])
+        user_salary = salary_lookups.get(user_id)
 
         decision = make_decision(
             req,
@@ -72,6 +75,7 @@ def main() -> None:
             confirmed_incomes=user_incomes,
             cancelled_events=cancelled_events,
             amended_events=amended_events,
+            user_salary_info=user_salary,
         )
 
         status_counts[decision.affordability_status] = status_counts.get(decision.affordability_status, 0) + 1
